@@ -1,1 +1,1 @@
-// This is where all of the user side functions and logic will go
+// This is where all of the client side functions and logic will go
