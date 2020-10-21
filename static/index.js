@@ -10,6 +10,10 @@ function send(email, password) {
 function login() {
     let email = $("#email").val();
     let password = $("#password").val()
+    if (email == '' || password == '') {
+        alert("You did not enter an email or password");
+        return;
+    }
     send(email, password);
 }
 
