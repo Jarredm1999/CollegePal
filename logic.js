@@ -1,6 +1,9 @@
 //This is where all of the server side functions and logic will be held
 //Initializing local variables
 let status = "";
+let cred = [];
+let email = "";
+let password = "";
 const express = require('express');
 const app = express();
 let port = process.env.PORT;
@@ -8,23 +11,68 @@ if (port == null || port == "") {
     port = 80;
 }
 
-function initial(res) {
-    let args = {
-        "status" : status
-    };
-    res.render('index', args);
-}
+// Create database to hold results
+const sqlite3 = require('sqlite3').verbose();
+let db = new sqlite3.Database(
+    "./accounts.db",
+    sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
+    (err) => {
+        if (err) {
+            console.error(err.message);
+        } else {
+            console.log("Connected to db");
+        }
+    }
+);
+// Create tables if it doesn't already exist
+db.serialize(() => {
+    db.run(
+        'CREATE TABLE IF NOT EXISTS Accounts(email, password, name, major, population, distance, sociallife, demographic, graduationrate, sat, act, gpa)',
+        [],
+        (err) => {
+            if (err) {
+                console.error(err.message);
+            } else {
+                console.log("Table created");
+            }
+        }
+    );
+});
 
 function login(req, res){
-    let email = req.params.email;
-    let password = req.params.password;
-    if (email == 'jarredm1999@gmail.com' && password == 'pass123') {
-        status = "You are logged in";
-    } else {
-        status = "You entered an invalid email or password";
-    }
+    email = req.params.email;
+    password = req.params.password;
+    updateArr(res);
     console.log(req.params);
-    initial(res);
+}
+
+function updateArr(res) {
+    let sql = `SELECT email, password FROM accounts`;
+    db.serialize(() => {
+        db.all(sql, [], (err, rows) => {
+            if (err) {
+                reject(err);
+            }
+            rows.forEach((row) => {
+                cred.push(`${row.email}, ${row.password}`);
+            });
+            console.log("here");
+            console.log(cred.length);
+            let checkString = email + ", " + password;
+            for (let i = 0; i < cred.length; i++) {
+                if (checkString == cred[i]) {
+                    status = "You are logged in";
+                } else {
+                    status = "Enter a valid email and password";
+                }
+            }
+            let args = {
+                "status" : status
+            };
+            res.render('index', args);
+            cred.splice(0, cred.length);
+        });
+    });
 }
 
 
@@ -32,7 +80,7 @@ app.use(express.static("static"));
 app.set('views', './views')
 app.set('view engine', 'pug')
 app.get('/', (req, res) => {
-    initial(res);
+    updateArr(res);
 });
 app.get('/login/email/:email/password/:password', login);
 app.listen(port, ()=> {
