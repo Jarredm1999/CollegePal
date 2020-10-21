@@ -20,6 +20,8 @@ function login(req, res){
     let password = req.params.password;
     if (email == 'jarredm1999@gmail.com' && password == 'pass123') {
         status = "You are logged in";
+    } else if(email == '' || password == '') {
+        status = "Enter a email or password";
     } else {
         status = "You entered an invalid email or password";
     }
