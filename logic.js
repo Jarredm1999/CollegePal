@@ -39,6 +39,10 @@ db.serialize(() => {
     );
 });
 
+
+/**
+ * Assigns the email and password to a variable then calls checkCred()
+ */
 function login(req, res){
     email = req.params.email;
     password = req.params.password;
@@ -46,6 +50,11 @@ function login(req, res){
     console.log(req.params);
 }
 
+/**
+ * Pulls all of the email and passwords from the database and inserts them into an array.
+ * Checks if one of those match the email and password that the user inputted. 
+ * Renders a status message on the webpage.
+ */
 function checkCred(res) {
     let sql = `SELECT email, password FROM accounts`;
     db.serialize(() => {
