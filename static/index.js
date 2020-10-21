@@ -7,13 +7,10 @@ function send(email, password) {
     window.location.replace(url);
 }
 
-function login(email, password) {
-    if (email == 'jarredm1999@gmail.com' && password == 'pass123') {
-        send(email, password);
-    } else {
-        alert("You entered an invalid username or password");
-        return;
-    }
+function login() {
+    let email = $("#email").val();
+    let password = $("#password").val()
+    send(email, password);
 }
 
 function setup() {
