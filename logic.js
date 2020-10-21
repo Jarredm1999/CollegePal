@@ -42,11 +42,11 @@ db.serialize(() => {
 function login(req, res){
     email = req.params.email;
     password = req.params.password;
-    updateArr(res);
+    checkCred(res);
     console.log(req.params);
 }
 
-function updateArr(res) {
+function checkCred(res) {
     let sql = `SELECT email, password FROM accounts`;
     db.serialize(() => {
         db.all(sql, [], (err, rows) => {
@@ -56,8 +56,6 @@ function updateArr(res) {
             rows.forEach((row) => {
                 cred.push(`${row.email}, ${row.password}`);
             });
-            console.log("here");
-            console.log(cred.length);
             let checkString = email + ", " + password;
             for (let i = 0; i < cred.length; i++) {
                 if (checkString == cred[i]) {
@@ -80,7 +78,7 @@ app.use(express.static("static"));
 app.set('views', './views')
 app.set('view engine', 'pug')
 app.get('/', (req, res) => {
-    updateArr(res);
+    checkCred(res);
 });
 app.get('/login/email/:email/password/:password', login);
 app.listen(port, ()=> {
