@@ -31,7 +31,7 @@ String.prototype.hashCode = function() {
     if (this.length == 0) {
         return hash;
     }
-    for (var i = 0; i < this.length; i++) {
+    for (let i = 0; i < this.length; i++) {
         let char = this.charCodeAt(i);
         hash = ((hash<<5)-hash)+char;
         hash = hash & hash;
