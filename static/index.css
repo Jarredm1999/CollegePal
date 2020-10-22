@@ -1,4 +1,31 @@
 h1 {
     color: Blue;
     font-family: "Comic Sans MS", cursive, sans-serif;
+    text-align: center;
+}
+h2{
+    text-align: center;
+    font-size: 16px;
+}
+
+#email{
+     margin: 0 auto;
+    text-align: center;
+    
+}
+
+#password{
+    text-align: center;
+}
+
+#login {
+    font-size: 16px;
+     border: 2px black;
+     text-align: center;
+}
+
+#signup{
+    font-size: 16px;
+    border: 2px black;
+    text-align: center;
 }
