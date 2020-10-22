@@ -8,24 +8,20 @@ h2{
     font-size: 16px;
 }
 
-#email{
-     margin: 0 auto;
+h3 {
     text-align: center;
-    
 }
 
-#password{
+#input {
     text-align: center;
 }
 
 #login {
     font-size: 16px;
      border: 2px black;
-     text-align: center;
 }
 
 #signup{
     font-size: 16px;
     border: 2px black;
-    text-align: center;
 }
