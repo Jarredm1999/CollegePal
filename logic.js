@@ -4,6 +4,7 @@ let status = "";
 let cred = [];
 let email = "";
 let password = "";
+let actualName = "";
 const express = require('express');
 const app = express();
 let port = process.env.PORT;
@@ -40,6 +41,14 @@ db.serialize(() => {
 });
 
 
+function initial(res) {
+    res.render('index');
+}
+
+function signup(req, res) {
+    res.render('signup');
+}
+
 /**
  * Assigns the email and password to a variable then calls checkCred()
  */
@@ -56,7 +65,7 @@ function login(req, res){
  * Renders a status message on the webpage.
  */
 function checkCred(res) {
-    let sql = `SELECT email, password FROM accounts`;
+    let sql = `SELECT email, password, name FROM accounts`;
     db.serialize(() => {
         db.all(sql, [], (err, rows) => {
             if (err) {
@@ -64,6 +73,7 @@ function checkCred(res) {
             }
             rows.forEach((row) => {
                 cred.push(`${row.email}, ${row.password}`);
+                actualName = `${row.name}` + ", welcome to college pal";
             });
             let checkString = email + ", " + password;
             for (let i = 0; i < cred.length; i++) {
@@ -74,9 +84,10 @@ function checkCred(res) {
                 }
             }
             let args = {
-                "status" : status
+                "welcome" : actualName
             };
-            res.render('index', args);
+            console.log(status);
+            res.render('homepage', args);
             cred.splice(0, cred.length);
         });
     });
@@ -87,9 +98,10 @@ app.use(express.static("static"));
 app.set('views', './views')
 app.set('view engine', 'pug')
 app.get('/', (req, res) => {
-    checkCred(res);
+    initial(res);
 });
 app.get('/login/email/:email/password/:password', login);
+app.get('/signup/', signup);
 app.listen(port, ()=> {
     console.log("App running at port=" + port)
 });
