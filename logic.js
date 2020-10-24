@@ -68,8 +68,7 @@ function login(req, res){
 /**
  * Pulls all of the email and passwords from the database and inserts them into an array.
  * Checks if one of those match the email and password that the user inputted. 
- * Using the checked email and password searches the database for the users first name
- * and renders the homepage with a personalized welcom message.
+ * If it is then the function renders the homepage.
  */
 function checkCred(res) {
     let sql = `SELECT email, password FROM accounts`;
@@ -83,36 +82,24 @@ function checkCred(res) {
             });
             let checkString = email + ", " + password;
             for (let i = 0; i < cred.length; i++) {
+                console.log(checkString);
+                console.log(cred[i]);
                 if (checkString == cred[i]) {
                     status = "You are logged in";
-                } else {
-                    status = "Enter a valid email and password";
                 }
             }
-            sql = `SELECT name FROM Accounts WHERE email = "jarredm1999@gmail.com" AND password = -792095615`;
-            db.serialize(() => {
-                db.all(sql, [], (err, rows) => {
-                    if (err) {
-                        reject(err);
-                    }
-                    rows.forEach((row) => {
-                        let name = `${row.name}`;
-                        let splitName = name.split(" ");
-                        let firstName = splitName[0];
-                        welcome = "Welcome to College Pal" + ", " + firstName;
-                    });
-                    let args = {
-                        "welcome" : welcome
-                    };
-                    console.log(status);
-                    if (status == "You are logged in") {
-                        res.render('homepage', args);
-                    } else {
-                        initial(res);
-                    }
-                });
-            });
+            let welcome = "Welcom to College Pal";
+            let args = {
+                "welcome" : welcome
+            };
+            console.log(status);
+            if (status == "You are logged in") {
+                res.render('homepage', args);
+            } else {
+                initial(res);
+            }
             cred.splice(0, cred.length);
+            status = "";
         });
     });
 }
