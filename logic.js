@@ -88,7 +88,7 @@ function checkCred(res) {
                     status = "You are logged in";
                 }
             }
-            let welcome = "Welcom to College Pal";
+            let welcome = "Welcome to College Pal";
             let args = {
                 "welcome" : welcome
             };
