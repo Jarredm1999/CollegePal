@@ -65,7 +65,7 @@ function login(req, res){
  * Renders a status message on the webpage.
  */
 function checkCred(res) {
-    let sql = `SELECT email, password, name FROM accounts`;
+    let sql = `SELECT email, password FROM accounts`;
     db.serialize(() => {
         db.all(sql, [], (err, rows) => {
             if (err) {
@@ -73,7 +73,6 @@ function checkCred(res) {
             }
             rows.forEach((row) => {
                 cred.push(`${row.email}, ${row.password}`);
-                actualName = `${row.name}` + ", welcome to college pal";
             });
             let checkString = email + ", " + password;
             for (let i = 0; i < cred.length; i++) {
@@ -83,8 +82,9 @@ function checkCred(res) {
                     status = "Enter a valid email and password";
                 }
             }
+            let welcome = "Welcome to College Pal";
             let args = {
-                "welcome" : actualName
+                "welcome" : welcome
             };
             console.log(status);
             if (status == "You are logged in") {
