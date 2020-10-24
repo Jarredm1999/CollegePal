@@ -5,6 +5,7 @@ let cred = [];
 let email = "";
 let password = "";
 let actualName = "";
+let welcome = "";
 const express = require('express');
 const app = express();
 let port = process.env.PORT;
@@ -40,11 +41,16 @@ db.serialize(() => {
     );
 });
 
-
+/**
+ * Renders the login page
+ */
 function initial(res) {
     res.render('index');
 }
 
+/**
+ * Adding more to this function. Right now it is just rendering the signup page when the signup button is clicked
+ */
 function signup(req, res) {
     res.render('signup');
 }
@@ -62,7 +68,8 @@ function login(req, res){
 /**
  * Pulls all of the email and passwords from the database and inserts them into an array.
  * Checks if one of those match the email and password that the user inputted. 
- * Renders a status message on the webpage.
+ * Using the checked email and password searches the database for the users first name
+ * and renders the homepage with a personalized welcom message.
  */
 function checkCred(res) {
     let sql = `SELECT email, password FROM accounts`;
@@ -82,16 +89,29 @@ function checkCred(res) {
                     status = "Enter a valid email and password";
                 }
             }
-            let welcome = "Welcome to College Pal";
-            let args = {
-                "welcome" : welcome
-            };
-            console.log(status);
-            if (status == "You are logged in") {
-                res.render('homepage', args);
-            } else {
-                initial(res);
-            }
+            sql = `SELECT name FROM Accounts WHERE email = "jarredm1999@gmail.com" AND password = -792095615`;
+            db.serialize(() => {
+                db.all(sql, [], (err, rows) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    rows.forEach((row) => {
+                        let name = `${row.name}`;
+                        let splitName = name.split(" ");
+                        let firstName = splitName[0];
+                        welcome = "Welcome to College Pal" + ", " + firstName;
+                    });
+                    let args = {
+                        "welcome" : welcome
+                    };
+                    console.log(status);
+                    if (status == "You are logged in") {
+                        res.render('homepage', args);
+                    } else {
+                        initial(res);
+                    }
+                });
+            });
             cred.splice(0, cred.length);
         });
     });
