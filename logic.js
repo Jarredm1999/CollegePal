@@ -87,7 +87,11 @@ function checkCred(res) {
                 "welcome" : actualName
             };
             console.log(status);
-            res.render('homepage', args);
+            if (status == "You are logged in") {
+                res.render('homepage', args);
+            } else {
+                initial(res);
+            }
             cred.splice(0, cred.length);
         });
     });
