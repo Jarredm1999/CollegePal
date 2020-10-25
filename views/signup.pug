@@ -3,13 +3,17 @@ html
         title Sign Up Page
         script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
         script(src="/index.js")
+        link(rel='stylesheet', href='/signup.css')
     body
-        h1 Sign Up Page - Tell us a bit about yourself
+        h1 Sign Up Page 
+        h2 Tell us a bit about yourself!
         p First name
         input(type="text")#firstname
         br
         p Last Name 
         input(type="text")#lastname
         br
-       
-        
+        div(class='div-class')#input
+            input(type="text")#firstname
+            br
+            input(type="text")#lastname
