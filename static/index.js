@@ -9,6 +9,12 @@ function send(email, password) {
     window.location.replace(url);
 }
 
+function signup() {
+    let url = "/signup/";
+    console.log(url);
+    window.location.replace(url);
+}
+
 /**
  * Checks if text is entered before sending.
  */

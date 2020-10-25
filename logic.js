@@ -4,6 +4,8 @@ let status = "";
 let cred = [];
 let email = "";
 let password = "";
+let actualName = "";
+let welcome = "";
 const express = require('express');
 const app = express();
 let port = process.env.PORT;
@@ -39,6 +41,19 @@ db.serialize(() => {
     );
 });
 
+/**
+ * Renders the login page
+ */
+function initial(res) {
+    res.render('index');
+}
+
+/**
+ * Adding more to this function. Right now it is just rendering the signup page when the signup button is clicked
+ */
+function signup(req, res) {
+    res.render('signup');
+}
 
 /**
  * Assigns the email and password to a variable then calls checkCred()
@@ -53,7 +68,7 @@ function login(req, res){
 /**
  * Pulls all of the email and passwords from the database and inserts them into an array.
  * Checks if one of those match the email and password that the user inputted. 
- * Renders a status message on the webpage.
+ * If it is then the function renders the homepage.
  */
 function checkCred(res) {
     let sql = `SELECT email, password FROM accounts`;
@@ -67,17 +82,24 @@ function checkCred(res) {
             });
             let checkString = email + ", " + password;
             for (let i = 0; i < cred.length; i++) {
+                console.log(checkString);
+                console.log(cred[i]);
                 if (checkString == cred[i]) {
                     status = "You are logged in";
-                } else {
-                    status = "Enter a valid email and password";
                 }
             }
+            let welcome = "Welcome to College Pal";
             let args = {
-                "status" : status
+                "welcome" : welcome
             };
-            res.render('index', args);
+            console.log(status);
+            if (status == "You are logged in") {
+                res.render('homepage', args);
+            } else {
+                initial(res);
+            }
             cred.splice(0, cred.length);
+            status = "";
         });
     });
 }
@@ -87,9 +109,10 @@ app.use(express.static("static"));
 app.set('views', './views')
 app.set('view engine', 'pug')
 app.get('/', (req, res) => {
-    checkCred(res);
+    initial(res);
 });
 app.get('/login/email/:email/password/:password', login);
+app.get('/signup/', signup);
 app.listen(port, ()=> {
     console.log("App running at port=" + port)
 });
