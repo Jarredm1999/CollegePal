@@ -24,11 +24,13 @@ h3 {
 }
 
 #login {
+    font-family: "Comic Sans MS", cursive, sans-serif;
     font-size: 16px;
     border: 2px black;
 }
 
 #signup{
+    font-family: "Comic Sans MS", cursive, sans-serif;
     font-size: 16px;
     border: 2px black;
 }

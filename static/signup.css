@@ -3,23 +3,35 @@ h1 {
     font-family: "Comic Sans MS", cursive, sans-serif;
     text-align: center;
 }
-h2 {
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    font-size: 20px;
+
+#firstname {
     text-align: center;
-}
-
-
-#input {
    margin-left: auto;
    margin-right:auto;
 }
 
-#firstname {
-    text-align: center;
+#input {
+  text-align: center;
 }
 
 #lastname {
    text-align: center;
 }
 
+#username {
+    text-align: center;
+}
+
+#password {
+    text-align: center;
+}
+
+#e-mail {
+    text-align: center;
+}
+
+#next{
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 16px;
+    border: 2px black;
+}
