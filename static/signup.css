@@ -14,6 +14,10 @@ h1 {
   text-align: center;
 }
 
+#test {
+   font-weight: bold;
+}
+
 #lastname {
    text-align: center;
 }
