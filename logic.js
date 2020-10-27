@@ -54,6 +54,10 @@ function initial(res) {
 function signup(req, res) {
     res.render('signup');
 }
+// Trying to connect the preference page to the next button - Chyna
+function next (req,res) {
+    res.render('preference');
+}
 
 /**
  * Assigns the email and password to a variable then calls checkCred()
@@ -113,6 +117,7 @@ app.get('/', (req, res) => {
 });
 app.get('/login/email/:email/password/:password', login);
 app.get('/signup/', signup);
+app.get('/preference/', next);
 app.listen(port, ()=> {
     console.log("App running at port=" + port)
 });
