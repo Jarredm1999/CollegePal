@@ -1,0 +1,21 @@
+h1 {
+    color: Blue;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    text-align: center;
+    font-weight: bold;
+}
+
+p{
+    text-align: center;
+    font-weight: bold ;
+}
+
+h2 {
+    text-align: center;
+    font-weight: bold;
+    padding: 50px;
+}
+
+#majorinput, #gpainput, #satoractinput, #graduationrateinput, #demographicinput, #socialinput, #instateinput, #populationinput, #signupinput {
+    text-align: center;
+}

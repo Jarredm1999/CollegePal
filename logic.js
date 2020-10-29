@@ -69,6 +69,10 @@ function initial(res) {
 function signup(req, res) {
     res.render('signup');
 }
+// Trying to connect the preference page to the next button - Chyna
+function next (req,res) {
+    res.render('preference');
+}
 
 function insertSignup(req, res) {
     email = req.params.email;
