@@ -22,7 +22,7 @@ function next() {
     let name = firstname + " " + lastname;
     
     if (email == '' || password == '' || password2 == '' || firstname == '' || lastname == '') {
-        alert("Enter all of the feilds");
+        alert("Enter all of the fields");
         return;
     }
     
