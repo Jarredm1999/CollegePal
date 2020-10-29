@@ -15,12 +15,6 @@ function signup() {
     window.location.replace(url);
 }
 
-function next() {
-    let url = "/preference/";
-    console.log(url);
-    window.location.replace(url);
-}
-
 /**
  * Checks if text is entered before sending.
  */
@@ -57,7 +51,6 @@ String.prototype.hashCode = function() {
 function setup() {
     $("#login").click(login);
     $("#signup").click(signup);
-    $("#next").click(next);
 }
 
 

@@ -74,6 +74,9 @@ function next (req,res) {
     res.render('preference');
 }
 
+/**
+ * Holds the value of email, password and name so that we can insert all of the users info into the database
+ */
 function insertSignup(req, res) {
     email = req.params.email;
     password = req.params.password;
@@ -82,9 +85,11 @@ function insertSignup(req, res) {
     res.render('preference');
 }
 
+/**
+ * inserts all of the users info into the database and displays a welcome message on the homepage
+ */
 function updatePref(req, res) {
     let major = req.params.major;
-    console.log(major);
     let population = req.params.population;
     let distance  = req.params.distance;
     let sociallife = req.params.sociallife;
@@ -94,7 +99,7 @@ function updatePref(req, res) {
     let gpa = req.params.gpa;
     db.run(`INSERT INTO Accounts(email, password, name, major, population, distance, sociallife, demographic, graduationrate, satoract, gpa) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [email, password, name, major, population, distance, sociallife, demographic, graduationrate, satoract, gpa], function(err) {
         if (err) {
-            return console.log(err.message);
+            console.log(err.message);
         }
         let names = name.split(" ");
         let firstname = names[0];
@@ -157,8 +162,10 @@ function checkCred(res) {
     });
 }
 
+/**
+ * Exports the exTest function for tesing
+ */
 exports.exTest = exTest;
-exports.login = login;
 
 app.use(express.static("static"));
 app.set('views', './views')
