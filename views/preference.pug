@@ -2,8 +2,65 @@ html
     head
         title Preference Page
         script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
-        script(src="/index.js")
+        script(src="/preference.js")
+        link(rel='stylesheet', href='/preference.css')
     body
         h1 Preference Page
         p Here, you will give us an idea what colleges to recommend for you
-       
+        p Major
+        br
+        select#major
+            option(value="compsci") Computer Science
+            option(value="math") Math
+            option(value="english") English
+        p Population
+        br
+        select#population
+            option(value="<5,000") <5,000
+            option(value="<10,000") <10,000
+            option(value="<15,000") <15,000
+            option(value="<20,000") <20,000
+        p In/State
+        br
+        select#distance
+            option(value="instate") In State
+            option(value="outstate") Out of State
+        p Social Life
+        br
+        select#sociallife
+            option(value="in") In city
+            option(value="near") Near city
+            option(value="far") Far from city
+        p HBCU/PWI
+        br
+        select#demographic
+            option(value="HBCU") HBCU
+            option(value="PWI") PWI
+        p Graduation Rate
+        br
+        select#graduationrate
+            option(value=">70%") >70%
+            option(value="<70%") <70%
+        p SAT/ACT
+        br
+        select#satoract
+            option(value="SAT only") SAT only
+            option(value="ACT only") ACT only
+            option(value="Both") Both
+        p GPA
+        br
+        select#gpa
+            option(value=">3.0") >3.0
+            option(value=">3.25") >3.25
+            option(value=">3.5") >3.5
+            option(value=">3.75") >3.75
+        br
+        input(type="button", value="Sign up")#signup
+            
+            
+            
+            
+            
+            
+            
+            

@@ -4,13 +4,28 @@ let status = "";
 let cred = [];
 let email = "";
 let password = "";
-let actualName = "";
+let name = "";
+let major = "";
+let population = "";
+let distance  = "";
+let sociallife = "";
+let demographic = "";
+let graduationrate = "";
+let satoract = "";
+let gpa = "";
 let welcome = "";
 const express = require('express');
 const app = express();
 let port = process.env.PORT;
 if (port == null || port == "") {
     port = 80;
+}
+
+/**
+ * Just a test function for testing
+ */
+function exTest(email) {
+    return email;
 }
 
 // Create database to hold results
@@ -29,7 +44,7 @@ let db = new sqlite3.Database(
 // Create tables if it doesn't already exist
 db.serialize(() => {
     db.run(
-        'CREATE TABLE IF NOT EXISTS Accounts(email, password, name, major, population, distance, sociallife, demographic, graduationrate, sat, act, gpa)',
+        'CREATE TABLE IF NOT EXISTS Accounts(email, password, name, major, population, distance, sociallife, demographic, graduationrate, satoract, gpa)',
         [],
         (err) => {
             if (err) {
@@ -55,14 +70,48 @@ function signup(req, res) {
     res.render('signup');
 }
 
+function insertSignup(req, res) {
+    email = req.params.email;
+    password = req.params.password;
+    name = req.params.name;
+    console.log(req.params);
+    res.render('preference');
+}
+
+function updatePref(req, res) {
+    let major = req.params.major;
+    console.log(major);
+    let population = req.params.population;
+    let distance  = req.params.distance;
+    let sociallife = req.params.sociallife;
+    let demographic = req.params.demographic;
+    let graduationrate = req.params.graduationrate;
+    let satoract = req.params.satoract;
+    let gpa = req.params.gpa;
+    db.run(`INSERT INTO Accounts(email, password, name, major, population, distance, sociallife, demographic, graduationrate, satoract, gpa) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [email, password, name, major, population, distance, sociallife, demographic, graduationrate, satoract, gpa], function(err) {
+        if (err) {
+            return console.log(err.message);
+        }
+        let names = name.split(" ");
+        let firstname = names[0];
+        let welcome = "Thank you for signing up " + firstname + "\n Welcome to college pal";
+        let args = {
+            "welcome" : welcome
+        };
+        res.render('homepage', args);
+    });
+}
+
 /**
  * Assigns the email and password to a variable then calls checkCred()
  */
-function login(req, res){
+function login(req, res=''){
     email = req.params.email;
     password = req.params.password;
     checkCred(res);
     console.log(req.params);
+    let check = email + ", " + password;
+    return check;
 }
 
 /**
@@ -104,6 +153,8 @@ function checkCred(res) {
     });
 }
 
+exports.exTest = exTest;
+exports.login = login;
 
 app.use(express.static("static"));
 app.set('views', './views')
@@ -113,6 +164,8 @@ app.get('/', (req, res) => {
 });
 app.get('/login/email/:email/password/:password', login);
 app.get('/signup/', signup);
+app.get('/signup/email/:email/password/:password/name/:name', insertSignup);
+app.get('/update/major/:major/population/:population/distance/:distance/sociallife/:sociallife/demographic/:demographic/graduationrate/:graduationrate/satoract/:satoract/gpa/:gpa', updatePref);
 app.listen(port, ()=> {
     console.log("App running at port=" + port)
 });
