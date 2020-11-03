@@ -8,9 +8,11 @@ h1 {
 p{
     text-align: center;
     font-weight: bold ;
+    font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
 h2 {
+    font-family: "Comic Sans MS", cursive, sans-serif;
     text-align: center;
     font-weight: bold;
     padding: 50px;
@@ -18,4 +20,25 @@ h2 {
 
 #majorinput, #gpainput, #satoractinput, #graduationrateinput, #demographicinput, #socialinput, #instateinput, #populationinput, #signupinput {
     text-align: center;
+}
+
+#signup {
+  padding: 2.5px 4px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: blue;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+#signup:hover {opacity: 0.6}
+#signup:active {
+  background-color: blue;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
