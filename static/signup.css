@@ -10,10 +10,26 @@ h1 {
 
 p{
    font-weight: bold;
+   font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
 #next{
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    font-size: 16px;
-    border: 2px black;
+  padding: 2.5px 4px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: blue;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+#next:hover {opacity: 0.6}
+#next:active {
+  background-color: blue;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
