@@ -6,7 +6,6 @@ console.log("Hello World");
 function send(email, password) {
     let url = "/login/email/" + email + "/password/" + password;
     console.log(url);
-    return url;
     window.location.replace(url);
 }
 
