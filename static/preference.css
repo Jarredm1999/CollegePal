@@ -32,13 +32,13 @@ h2 {
   background-color: blue;
   border: none;
   border-radius: 15px;
-  box-shadow: 0 9px #999;
+  box-shadow: 0 3px #999;
   font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
 #signup:hover {opacity: 0.6}
 #signup:active {
   background-color: blue;
-  box-shadow: 0 5px #666;
+  box-shadow: 0 3px #666;
   transform: translateY(4px);
 }

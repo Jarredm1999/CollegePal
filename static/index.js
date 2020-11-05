@@ -23,8 +23,9 @@ function login() {
     let password = $("#password").val();
     let hashed = password.hashCode();
     if (email == '' || password == '') {
-        alert("You did not enter an email or password");
-        return;
+        let status = "You did not enter an email or password";
+        alert(status);
+        return status;
     }
     send(email, hashed);
 }

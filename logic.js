@@ -70,7 +70,7 @@ function signup(req, res) {
     res.render('signup');
 }
 // Trying to connect the preference page to the next button - Chyna
-function next (req,res) {
+function next(req,res) {
     res.render('preference');
 }
 
@@ -114,13 +114,11 @@ function updatePref(req, res) {
 /**
  * Assigns the email and password to a variable then calls checkCred()
  */
-function login(req, res=''){
+function login(req, res){
     email = req.params.email;
     password = req.params.password;
     checkCred(res);
     console.log(req.params);
-    let check = email + ", " + password;
-    return check;
 }
 
 /**
