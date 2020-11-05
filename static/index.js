@@ -6,7 +6,12 @@ console.log("Hello World");
 function send(email, password) {
     let url = "/login/email/" + email + "/password/" + password;
     console.log(url);
-    window.location.replace(url);
+    if (typeof window === 'undefined') {
+        console.log("We are running from node");
+        return url;
+    } else {
+        window.location.replace(url);
+    }
 }
 
 function signup() {
@@ -54,7 +59,9 @@ function setup() {
     $("#signup").click(signup);
 }
 
-
-
-
-$(document).ready(setup);
+if (typeof window === 'undefined') {
+    console.log("We are running from node");
+    exports.send = send;
+} else {
+    $(document).ready(setup);
+}
