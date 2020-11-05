@@ -88,7 +88,7 @@ h3 {
   background-color: blue;
   border: none;
   border-radius: 15px;
-  box-shadow: 0 9px #999;
+  box-shadow: 0 3px #999;
   font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
@@ -109,7 +109,7 @@ h3 {
   background-color: blue;
   border: none;
   border-radius: 15px;
-  box-shadow: 0 9px #999;
+  box-shadow: 0 3px #999;
 }
 
 #signup:hover {opacity: 0.6}
