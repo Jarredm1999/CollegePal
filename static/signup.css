@@ -1,18 +1,101 @@
-h1 {
-    color: Blue;
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    text-align: center;
-    z-index: 2;
+#bg {
+      /* The image used */
+  background-image: url("collegepal.jpg");
+
+  /* Full height */
+  height: 100%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+   filter: blur(8px);
+  -webkit-filter: blur(8px);
 }
 
-#input {
+
+h1 /* sign up */ {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  padding: 20px;
   text-align: center;
 }
 
-p{
-   font-weight: bold;
-   font-family: "Comic Sans MS", cursive, sans-serif;
-   z-index: 2;
+h2 /* First name*/ {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  text-align: center;
+}
+
+#firstname{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 35%;
+  left: 43%;
+  text-align: center;
+}
+
+h3 /*Last name */{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  text-align: center;
+}
+
+#lastname {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 48%;
+  left: 43%;
+  text-align: center;
+}
+
+h4 /* Email */{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  text-align: center;
+}
+
+#email{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 59%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  text-align: center;
+}
+
+h4{
+    
 }
 
 #next{
