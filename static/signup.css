@@ -1,17 +1,12 @@
 #bg {
       /* The image used */
   background-image: url("collegepal.jpg");
-
-  /* Full height */
-  height: 100%; 
-
-  /* Center and scale the image nicely */
+  height: 150%; 
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  
-   filter: blur(8px);
-  -webkit-filter: blur(8px);
+  filter: blur(8px);
+  margin-bottom: 0px;
 }
 
 
@@ -41,7 +36,6 @@ h2 /* First name*/ {
 
 #firstname{
   font-family: "Comic Sans MS", cursive, sans-serif;
-  color: white;
   font-weight: bold;
   position: absolute;
   top: 35%;
@@ -63,7 +57,6 @@ h3 /*Last name */{
 
 #lastname {
   font-family: "Comic Sans MS", cursive, sans-serif;
-  color: white;
   font-weight: bold;
   position: absolute;
   top: 48%;
@@ -85,7 +78,6 @@ h4 /* Email */{
 
 #email{
   font-family: "Comic Sans MS", cursive, sans-serif;
-  color: white;
   font-weight: bold;
   position: absolute;
   top: 59%;
@@ -94,11 +86,55 @@ h4 /* Email */{
   text-align: center;
 }
 
-h4{
-    
+h5 /*Password*/ {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  text-align: center;
+}
+
+#password{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-weight: bold;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  text-align: center;
+}
+
+h6 /* Re-Enter password*/ {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  text-align: center;  
+}
+
+#password2 {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-weight: bold;
+  position: absolute;
+  top: 82%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  text-align: center;
 }
 
 #next{
+  position: absolute;
+  top: 88%;
+  left: 50%;
+  transform: translate(-50%,50%);
   padding: 2.5px 4px;
   font-size: 24px;
   text-align: center;
