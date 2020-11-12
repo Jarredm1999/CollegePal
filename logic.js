@@ -2,6 +2,7 @@
 //Initializing local variables
 let status = "";
 let cred = [];
+let selectedSchools = [];
 let email = "";
 let password = "";
 let name = "";
@@ -14,6 +15,9 @@ let graduationrate = "";
 let satoract = "";
 let gpa = "";
 let welcome = "";
+let count = 0;
+let stored = "";
+let selectedSchool = "";
 const express = require('express');
 const app = express();
 let port = process.env.PORT;
@@ -31,7 +35,7 @@ function exTest(email) {
 // Create database to hold results
 const sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database(
-    "./accounts.db",
+    "./data.db",
     sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
     (err) => {
         if (err) {
@@ -55,6 +59,22 @@ db.serialize(() => {
         }
     );
 });
+
+// Create tables if it doesn't already exist
+db.serialize(() => {
+    db.run(
+        'CREATE TABLE IF NOT EXISTS Colleges(schoolname, majors, population, distance, sociallife, demographic, graduationrate, satoract, gpa)',
+        [],
+        (err) => {
+            if (err) {
+                console.error(err.message);
+            } else {
+                console.log("Table created");
+            }
+        }
+    );
+});
+
 
 /**
  * Renders the login page
@@ -101,11 +121,65 @@ function updatePref(req, res) {
         if (err) {
             console.log(err.message);
         }
+    });
+    let sql = `SELECT schoolname, majors, population, distance, sociallife, demographic, graduationrate, satoract, gpa FROM Colleges`;
+        db.all(sql, [], (err, rows) => {
+            if (err) {
+                console.log(err.message);
+            }
+            rows.forEach((row) => {
+                let majorsArr = `${row.majors}`.split(' ');
+                for (let i = 0; i < majorsArr.length; i++) {
+                    if (major == majorsArr[i]) {
+                        count++;
+                    }
+                }
+                if (count > 0) {
+                    if (population == `${row.population}`) {
+                        count++;
+                    } 
+                    if (distance == `${row.distance}`) {
+                        count++;
+                    }
+                    if (sociallife == `${row.sociallife}`) {
+                        count++;
+                    }
+                    if (demographic == `${row.demographic}`) {
+                        count++;
+                    }
+                    if (graduationrate == `${row.graduationrate}`) {
+                        count++;
+                    }
+                    if (satoract == `${row.satoract}`) {
+                        count++;
+                    }
+                    if (gpa == `${row.gpa}`) {
+                        count++;
+                    }
+                    selectedSchools.push(`${row.schoolname}` + " " + count);
+                }
+                count = 0;
+            });
+        console.log(selectedSchools);
+        for (let i = 0; i < selectedSchools.length; i++) {
+            if (selectedSchools[i].slice(-1) > stored) {
+                stored = selectedSchools[i].slice(-1);
+            }
+        }
+        
+        for (let i = 0; i < selectedSchools.length; i++) {
+            if (stored == selectedSchools[i].slice(-1)) {
+                selectedSchool = selectedSchools[i].substring(0, selectedSchools[i].length - 1);
+            }
+        }
+        console.log(selectedSchool);
         let names = name.split(" ");
         let firstname = names[0];
         let welcome = "Thank you for signing up " + firstname + "\n Welcome to college pal";
         let args = {
-            "welcome" : welcome
+            "welcome" : welcome,
+            "selectedSchool" : selectedSchool,
+            "stored" : stored
         };
         res.render('homepage', args);
     });
