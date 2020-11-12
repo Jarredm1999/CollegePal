@@ -149,8 +149,4 @@ h6 /* Re-Enter password*/ {
 }
 
 #next:hover {opacity: 0.6}
-#next:active {
-  background-color: blue;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
+
