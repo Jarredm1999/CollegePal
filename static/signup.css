@@ -1,21 +1,140 @@
-h1 {
-    color: Blue;
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    text-align: center;
-    z-index: 2;
+#bg {
+      /* The image used */
+  background-image: url("collegepal.jpg");
+  height: 150%; 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(8px);
+  margin-bottom: 0px;
 }
 
-#input {
+
+h1 /* sign up */ {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  padding: 20px;
   text-align: center;
 }
 
-p{
-   font-weight: bold;
-   font-family: "Comic Sans MS", cursive, sans-serif;
-   z-index: 2;
+h2 /* First name*/ {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  text-align: center;
+}
+
+#firstname{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-weight: bold;
+  position: absolute;
+  top: 35%;
+  left: 43%;
+  text-align: center;
+}
+
+h3 /*Last name */{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  text-align: center;
+}
+
+#lastname {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-weight: bold;
+  position: absolute;
+  top: 48%;
+  left: 43%;
+  text-align: center;
+}
+
+h4 /* Email */{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  text-align: center;
+}
+
+#email{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-weight: bold;
+  position: absolute;
+  top: 59%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  text-align: center;
+}
+
+h5 /*Password*/ {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  text-align: center;
+}
+
+#password{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-weight: bold;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  text-align: center;
+}
+
+h6 /* Re-Enter password*/ {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  text-align: center;  
+}
+
+#password2 {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-weight: bold;
+  position: absolute;
+  top: 82%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  text-align: center;
 }
 
 #next{
+  position: absolute;
+  top: 88%;
+  left: 50%;
+  transform: translate(-50%,50%);
   padding: 2.5px 4px;
   font-size: 24px;
   text-align: center;
