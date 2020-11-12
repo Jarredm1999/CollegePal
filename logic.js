@@ -3,6 +3,8 @@
 let status = "";
 let cred = [];
 let selectedSchools = [];
+let pref = [];
+let userPref = [];
 let email = "";
 let password = "";
 let name = "";
@@ -201,7 +203,7 @@ function login(req, res){
  * If it is then the function renders the homepage.
  */
 function checkCred(res) {
-    let sql = `SELECT email, password FROM accounts`;
+    let sql = `SELECT email, password, major, population, distance, sociallife, demographic, graduationrate, satoract, gpa FROM accounts`;
     db.serialize(() => {
         db.all(sql, [], (err, rows) => {
             if (err) {
@@ -209,6 +211,7 @@ function checkCred(res) {
             }
             rows.forEach((row) => {
                 cred.push(`${row.email}, ${row.password}`);
+                pref.push(`${row.major},${row.population},${row.distance},${row.sociallife},${row.demographic},${row.graduationrate},${row.satoract},${row.gpa}`);
             });
             let checkString = email + ", " + password;
             for (let i = 0; i < cred.length; i++) {
@@ -216,11 +219,67 @@ function checkCred(res) {
                 console.log(cred[i]);
                 if (checkString == cred[i]) {
                     status = "You are logged in";
+                    userPref = pref[i].split(",");
+                    console.log(userPref);
                 }
             }
+            let sql = `SELECT schoolname, majors, population, distance, sociallife, demographic, graduationrate, satoract, gpa FROM Colleges`;
+            db.all(sql, [], (err, rows) => {
+                if (err) {
+                    console.log(err.message);
+                }
+                rows.forEach((row) => {
+                    let majorsArr = `${row.majors}`.split(' ');
+                    for (let i = 0; i < majorsArr.length; i++) {
+                        if (userPref[0] == majorsArr[i]) {
+                            count++;
+                        }
+                    }
+                    if (count > 0) {
+                        if (userPref[1] == `${row.population}`) {
+                            count++;
+                        } 
+                        if (userPref[2] == `${row.distance}`) {
+                            count++;
+                        }
+                        if (userPref[3] == `${row.sociallife}`) {
+                            count++;
+                        }
+                        if (userPref[4] == `${row.demographic}`) {
+                            count++;
+                        }
+                        if (userPref[5] == `${row.graduationrate}`) {
+                            count++;
+                        }
+                        if (userPref[6] == `${row.satoract}`) {
+                            count++;
+                        }
+                        if (userPref[7] == `${row.gpa}`) {
+                            count++;
+                        }
+                        selectedSchools.push(`${row.schoolname}` + " " + count);
+                    }
+                    console.log(count);
+                    count = 0;
+                });
+             console.log(selectedSchools);
+            for (let i = 0; i < selectedSchools.length; i++) {
+                if (selectedSchools[i].slice(-1) > stored) {
+                    stored = selectedSchools[i].slice(-1);
+                }
+            }
+            
+            for (let i = 0; i < selectedSchools.length; i++) {
+                if (stored == selectedSchools[i].slice(-1)) {
+                    selectedSchool = selectedSchools[i].substring(0, selectedSchools[i].length - 1);
+                }
+            }
+            console.log(selectedSchool);
             let welcome = "Welcome to College Pal";
             let args = {
-                "welcome" : welcome
+                "welcome" : welcome,
+                "selectedSchool" : selectedSchool,
+                "stored" : stored
             };
             console.log(status);
             if (status == "You are logged in") {
@@ -232,6 +291,7 @@ function checkCred(res) {
             status = "";
         });
     });
+  });
 }
 
 /**
