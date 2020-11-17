@@ -1,13 +1,10 @@
-#bg {
-  /* The image used */
+body {
   background-image: url("collegepal.jpg");
-  /* Full height */
   height: 100%; 
-  /* Center and scale the image */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  filter: blur(8px);
+  backdrop-filter:blur(8px);
 }
 
 
