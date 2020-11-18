@@ -115,7 +115,7 @@ function insertSignup(req, res) {
  * The function then passes these colleges off as arguments to the homepage to be displayed
  * and stores the colleges in the database.
  */
-function updatePref(req, res) {
+function assignPref(req, res) {
     let major = req.params.major;
     let population = req.params.population;
     let distance  = req.params.distance;
@@ -222,7 +222,6 @@ function updatePref(req, res) {
         email = "'" + email + "'";
         
         let sql = "UPDATE Accounts SET schools = " + selectedSchool + " WHERE email = " + email;
-        console.log(sql);
         db.run(sql, [], (err, rows) => {
             if (err) {
                 console.log(err.message);
@@ -317,7 +316,7 @@ app.get('/', (req, res) => {
 app.get('/login/email/:email/password/:password', login);
 app.get('/signup/', signup);
 app.get('/signup/email/:email/password/:password/name/:name', insertSignup);
-app.get('/update/major/:major/population/:population/distance/:distance/sociallife/:sociallife/demographic/:demographic/graduationrate/:graduationrate/satoract/:satoract/gpa/:gpa', updatePref);
+app.get('/update/major/:major/population/:population/distance/:distance/sociallife/:sociallife/demographic/:demographic/graduationrate/:graduationrate/satoract/:satoract/gpa/:gpa', assignPref);
 app.listen(port, ()=> {
     console.log("App running at port=" + port)
 });
