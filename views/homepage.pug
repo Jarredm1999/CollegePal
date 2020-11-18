@@ -1,10 +1,10 @@
 html
     head
         title College Pal
+    body
         h1=welcome
         br
-        h1 The school you mathced with is: 
-        h1=selectedSchool
-        h1 with a preference score of 
-        h1=stored
-        h1 out of 8
+        h1 The schools you mathced with are: 
+        ul#answer
+            each item in selectedSchools
+                li= item
