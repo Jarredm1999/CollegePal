@@ -219,10 +219,9 @@ function updatePref(req, res) {
         console.log(selectedSchools.slice(0,3));
         
         
-        email = email.slice(1, -1);
-        test = "'" + email + "'";
+        email = "'" + email + "'";
         
-        let sql = "UPDATE Accounts SET schools = " + selectedSchool + " WHERE email = " + test;
+        let sql = "UPDATE Accounts SET schools = " + selectedSchool + " WHERE email = " + email;
         console.log(sql);
         db.run(sql, [], (err, rows) => {
             if (err) {
@@ -238,8 +237,6 @@ function updatePref(req, res) {
             "selectedSchools" : selectedSchools.slice(0,3)
         };
         res.render('homepage', args);
-        selectedSchools.splice(0, selectedSchools.length);
-        console.log(selectedSchools);
     });
 }
 /**
