@@ -177,7 +177,7 @@ function updatePref(req, res) {
         console.log(selectedSchool);
         let names = name.split(" ");
         let firstname = names[0];
-        let welcome = "Thank you for signing up " + firstname + "\n Welcome to college pal";
+        let welcome = "Thanks for signing up, \n" + firstname  + "welcome to College Pal!";
         let args = {
             "welcome" : welcome,
             "selectedSchool" : selectedSchool,

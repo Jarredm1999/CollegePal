@@ -1,0 +1,22 @@
+body{
+  background-image: url("collegepal.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 0px;
+  backdrop-filter: blur(8px);
+}
+
+h1 {
+    color: white;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    text-align: center;
+    font-weight: bold;
+}
+h2 {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    text-align: center;
+    font-weight: bold;
+    padding: 50px;
+    color: white;
+}
