@@ -2,10 +2,10 @@ html
     head
         title College Pal
         link(rel='stylesheet', href='/homepage.css')
+    body
         h1=welcome
         br
-        h2 The school you mathced with is: 
-        h2=selectedSchool 
-        h2 with a preference score of 
-        h2=stored 
-        h2 out of 8
+        h1 The schools you mathced with are: 
+        ul#answer
+            each item in selectedSchools
+                li= item

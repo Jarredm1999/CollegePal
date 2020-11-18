@@ -2,9 +2,11 @@
 //Initializing local variables
 let status = "";
 let cred = [];
-let selectedSchools = [];
+let schools = [];
 let pref = [];
 let userPref = [];
+let selectedSchools = [];
+let stored = new Array("0","0","0");
 let email = "";
 let password = "";
 let name = "";
@@ -18,7 +20,6 @@ let satoract = "";
 let gpa = "";
 let welcome = "";
 let count = 0;
-let stored = "";
 let selectedSchool = "";
 const express = require('express');
 const app = express();
@@ -50,7 +51,7 @@ let db = new sqlite3.Database(
 // Create tables if it doesn't already exist
 db.serialize(() => {
     db.run(
-        'CREATE TABLE IF NOT EXISTS Accounts(email, password, name, major, population, distance, sociallife, demographic, graduationrate, satoract, gpa)',
+        'CREATE TABLE IF NOT EXISTS Accounts(email, password, name, major, population, distance, sociallife, demographic, graduationrate, satoract, gpa, schools)',
         [],
         (err) => {
             if (err) {
@@ -108,7 +109,11 @@ function insertSignup(req, res) {
 }
 
 /**
- * inserts all of the users info into the database and displays a welcome message on the homepage
+ * inserts all of the users info into the database.
+ * Mathes the users preferences to each college and generates a preference score out of 8.
+ * Selects the best three colleges based off of the preference score.
+ * The function then passes these colleges off as arguments to the homepage to be displayed
+ * and stores the colleges in the database.
  */
 function updatePref(req, res) {
     let major = req.params.major;
@@ -119,7 +124,7 @@ function updatePref(req, res) {
     let graduationrate = req.params.graduationrate;
     let satoract = req.params.satoract;
     let gpa = req.params.gpa;
-    db.run(`INSERT INTO Accounts(email, password, name, major, population, distance, sociallife, demographic, graduationrate, satoract, gpa) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [email, password, name, major, population, distance, sociallife, demographic, graduationrate, satoract, gpa], function(err) {
+    db.run(`INSERT INTO Accounts(email, password, name, major, population, distance, sociallife, demographic, graduationrate, satoract, gpa, schools) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [email, password, name, major, population, distance, sociallife, demographic, graduationrate, satoract, gpa, " "], function(err) {
         if (err) {
             console.log(err.message);
         }
@@ -158,35 +163,82 @@ function updatePref(req, res) {
                     if (gpa == `${row.gpa}`) {
                         count++;
                     }
-                    selectedSchools.push(`${row.schoolname}` + " " + count);
+                    schools.push(`${row.schoolname}` + " " + count);
                 }
                 count = 0;
             });
-        console.log(selectedSchools);
-        for (let i = 0; i < selectedSchools.length; i++) {
-            if (selectedSchools[i].slice(-1) > stored) {
-                stored = selectedSchools[i].slice(-1);
+        console.log(schools);
+        for (let i = 0; i < schools.length; i++) {
+            if (schools[i].slice(-1) > stored[0]) {
+                stored[0] = schools[i].slice(-1);
             }
         }
         
-        for (let i = 0; i < selectedSchools.length; i++) {
-            if (stored == selectedSchools[i].slice(-1)) {
-                selectedSchool = selectedSchools[i].substring(0, selectedSchools[i].length - 1);
+        for (let i = 0; i < schools.length; i++) {
+            if (schools[i].slice(-1) > stored[1] && schools[i].slice(-1) != stored[0]) {
+                stored[1] = schools[i].slice(-1);
             }
         }
-        console.log(selectedSchool);
+        
+        for (let i = 0; i < schools.length; i++) {
+            if (schools[i].slice(-1) > stored[2] && schools[i].slice(-1) != stored[0] && schools[i].slice(-1) != stored[1]) {
+                stored[2] = schools[i].slice(-1);
+            }
+        }
+        
+        console.log("The top three preference scores are: ");
+        console.log(stored[0]);
+        console.log(stored[1]);
+        console.log(stored[2]);
+        
+        for (let i = 0; i < schools.length; i++) {
+            if (stored[0] == schools[i].slice(-1)) {
+                selectedSchools.push(schools[i].substring(0, schools[i].length - 2));
+            }
+        }
+        
+         for (let i = 0; i < schools.length; i++) {
+            if (stored[1] == schools[i].slice(-1)) {
+                selectedSchools.push(schools[i].substring(0, schools[i].length - 2));
+            }
+        }
+        
+         for (let i = 0; i < schools.length; i++) {
+            if (stored[2] == schools[i].slice(-1)) {
+                selectedSchools.push(schools[i].substring(0, schools[i].length - 2));
+            }
+        }
+        
+        for (let i = 0; i < 3; i ++) {
+            selectedSchool += selectedSchools[i] + ",";
+        }
+        selectedSchool = selectedSchool.substring(0, selectedSchool.length - 1);
+        let test = selectedSchool;
+        selectedSchool = "'" + test + "'";
+        console.log(selectedSchool)
+        console.log(selectedSchools.slice(0,3));
+        
+        
+        email = "'" + email + "'";
+        
+        let sql = "UPDATE Accounts SET schools = " + selectedSchool + " WHERE email = " + email;
+        console.log(sql);
+        db.run(sql, [], (err, rows) => {
+            if (err) {
+                console.log(err.message);
+            }
+        });
+            
         let names = name.split(" ");
         let firstname = names[0];
         let welcome = "Thanks for signing up, \n" + firstname  + "welcome to College Pal!";
         let args = {
             "welcome" : welcome,
-            "selectedSchool" : selectedSchool,
-            "stored" : stored
+            "selectedSchools" : selectedSchools.slice(0,3)
         };
         res.render('homepage', args);
     });
 }
-
 /**
  * Assigns the email and password to a variable then calls checkCred()
  */
@@ -200,10 +252,11 @@ function login(req, res){
 /**
  * Pulls all of the email and passwords from the database and inserts them into an array.
  * Checks if one of those match the email and password that the user inputted. 
- * If it is then the function renders the homepage.
+ * It then tries to get the schools that were recommended to the user and passes them
+ * to the preference page.
  */
 function checkCred(res) {
-    let sql = `SELECT email, password, major, population, distance, sociallife, demographic, graduationrate, satoract, gpa FROM accounts`;
+    let sql = `SELECT email, password, major, population, distance, sociallife, demographic, graduationrate, satoract, gpa, schools FROM accounts`;
     db.serialize(() => {
         db.all(sql, [], (err, rows) => {
             if (err) {
@@ -211,7 +264,6 @@ function checkCred(res) {
             }
             rows.forEach((row) => {
                 cred.push(`${row.email}, ${row.password}`);
-                pref.push(`${row.major},${row.population},${row.distance},${row.sociallife},${row.demographic},${row.graduationrate},${row.satoract},${row.gpa}`);
             });
             let checkString = email + ", " + password;
             for (let i = 0; i < cred.length; i++) {
@@ -219,79 +271,36 @@ function checkCred(res) {
                 console.log(cred[i]);
                 if (checkString == cred[i]) {
                     status = "You are logged in";
-                    userPref = pref[i].split(",");
-                    console.log(userPref);
-                }
-            }
-            let sql = `SELECT schoolname, majors, population, distance, sociallife, demographic, graduationrate, satoract, gpa FROM Colleges`;
-            db.all(sql, [], (err, rows) => {
-                if (err) {
-                    console.log(err.message);
-                }
-                rows.forEach((row) => {
-                    let majorsArr = `${row.majors}`.split(' ');
-                    for (let i = 0; i < majorsArr.length; i++) {
-                        if (userPref[0] == majorsArr[i]) {
-                            count++;
-                        }
-                    }
-                    if (count > 0) {
-                        if (userPref[1] == `${row.population}`) {
-                            count++;
-                        } 
-                        if (userPref[2] == `${row.distance}`) {
-                            count++;
-                        }
-                        if (userPref[3] == `${row.sociallife}`) {
-                            count++;
-                        }
-                        if (userPref[4] == `${row.demographic}`) {
-                            count++;
-                        }
-                        if (userPref[5] == `${row.graduationrate}`) {
-                            count++;
-                        }
-                        if (userPref[6] == `${row.satoract}`) {
-                            count++;
-                        }
-                        if (userPref[7] == `${row.gpa}`) {
-                            count++;
-                        }
-                        selectedSchools.push(`${row.schoolname}` + " " + count);
-                    }
-                    console.log(count);
-                    count = 0;
-                });
-             console.log(selectedSchools);
-            for (let i = 0; i < selectedSchools.length; i++) {
-                if (selectedSchools[i].slice(-1) > stored) {
-                    stored = selectedSchools[i].slice(-1);
                 }
             }
             
-            for (let i = 0; i < selectedSchools.length; i++) {
-                if (stored == selectedSchools[i].slice(-1)) {
-                    selectedSchool = selectedSchools[i].substring(0, selectedSchools[i].length - 1);
-                }
-            }
-            console.log(selectedSchool);
-            let welcome = "Welcome to College Pal";
-            let args = {
-                "welcome" : welcome,
-                "selectedSchool" : selectedSchool,
-                "stored" : stored
-            };
-            console.log(status);
+            
             if (status == "You are logged in") {
-                res.render('homepage', args);
+                email = "'" + email + "'";
+                console.log(email);
+                let sql = "SELECT schools FROM Accounts WHERE email = " + email
+                db.get(sql, [], (err, row) => {
+                    if (err) {
+                        return console.error(err.message);
+                    }
+                    selectedSchools = row.schools.split(",");
+                    console.log(selectedSchools);
+                      
+                    let welcome = "Welcome to College Pal";
+                    let args = {
+                        "welcome" : welcome,
+                        "selectedSchools" : selectedSchools
+                    };
+                    console.log(status);
+                    res.render('homepage', args);
+                    cred.splice(0, cred.length);
+                    status = "";
+                });
             } else {
                 initial(res);
             }
-            cred.splice(0, cred.length);
-            status = "";
         });
     });
-  });
 }
 
 /**
