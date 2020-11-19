@@ -81,7 +81,7 @@ describe("Load Heroku", function() {
        it("Should render the search page with status 200",
        function(done) {
            chai.request(url).get("/search/input/:input").end(function(err, res) {
-               expect(res.status).to.equal(404);
+               expect(res.status).to.equal(200);
                done();
            });
        });
