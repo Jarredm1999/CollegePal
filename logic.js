@@ -7,6 +7,7 @@ let pref = [];
 let userPref = [];
 let selectedSchools = [];
 let stored = new Array("0","0","0");
+let schoolNames = [];
 let email = "";
 let password = "";
 let name = "";
@@ -26,13 +27,6 @@ const app = express();
 let port = process.env.PORT;
 if (port == null || port == "") {
     port = 80;
-}
-
-/**
- * Just a test function for testing
- */
-function exTest(email) {
-    return email;
 }
 
 // Create database to hold results
@@ -95,6 +89,92 @@ function signup(req, res) {
 // Trying to connect the preference page to the next button - Chyna
 function next(req,res) {
     res.render('preference');
+}
+
+function search(req, res) {
+    let count = 0;
+    let message = "";
+    let input = req.params.input.toLowerCase();
+    console.log(input);
+    
+    let sql = `SELECT schoolname FROM Colleges`;
+    
+    db.all(sql, [], (err, rows) => {
+            if (err) {
+                console.log(err.message);
+            }
+            rows.forEach((row) => {
+                schoolNames.push(`${row.schoolname}`.toLowerCase());
+            });
+            
+            for (let i = 0; i < schoolNames.length; i++) {
+                if (input == schoolNames[i]) {
+                    count++
+                }
+            }
+            console.log(count);
+            
+            if (count > 0) {
+                message = "We found " + req.params.input + " in our database!";
+                let schoolname = "'" + req.params.input + "'"
+                let sql = "SELECT majors, population, distance, sociallife, demographic, graduationrate, satoract, gpa FROM Colleges WHERE schoolname = " + schoolname;
+                console.log(sql);
+                db.get(sql, [], (err, row) => {
+                    if (err) {
+                        return console.error(err.message);
+                    }
+                    
+                    let selectedMajors = row.majors.split(" ");
+                    let population = row.population;
+                    let distance = "";
+                    if (row.distance == 'in') {
+                        distance = "In state";
+                    } else {
+                        distance = "Out of state";
+                    }
+                    let sociallife = "";
+                    if (row.sociallife == 'in') {
+                        sociallife = "In city";
+                    } else if (row.sociallife == 'near') {
+                        sociallife = "Near City";
+                    } else {
+                        sociallife = "Far from City";
+                    }
+                    let demographic = row.demographic;
+                    let graduationrate = row.graduationrate;
+                    let satoract = row.satoract;
+                    let gpa = row.gpa;
+                    
+                    console.log(selectedMajors);
+                    console.log(population + " " + distance + " " + sociallife + " " + demographic + " " + graduationrate + " " + satoract + " " + gpa);
+                    
+                     let args = {
+                        "message" : message,
+                        "selectedMajors" : selectedMajors,
+                        "population" : population,
+                        "distance" : distance,
+                        "sociallife" : sociallife,
+                        "demographic" : demographic,
+                        "graduationrate" : graduationrate,
+                        "satoract" : satoract,
+                        "gpa" : gpa
+                    };
+                    
+                    res.render('searchpage', args);
+                });
+            } else {
+                message = "ERROR: We could not find " + req.params.input + " in our database";
+                
+                
+                let args = {
+                    "message" : message
+                };
+                res.render('searchpage2', args);
+            }
+            console.log(message);
+            
+    });
+    count = 0;
 }
 
 /**
@@ -218,7 +298,6 @@ function assignPref(req, res) {
         console.log(selectedSchool)
         console.log(selectedSchools.slice(0,3));
         
-        
         email = "'" + email + "'";
         
         let sql = "UPDATE Accounts SET schools = " + selectedSchool + " WHERE email = " + email;
@@ -230,7 +309,7 @@ function assignPref(req, res) {
             
         let names = name.split(" ");
         let firstname = names[0];
-        let welcome = "Thank you for signing up " + firstname + "\n Welcome to college pal";
+        let welcome = "Thanks for signing up, \n" + firstname  + " welcome to College Pal!";
         let args = {
             "welcome" : welcome,
             "selectedSchools" : selectedSchools.slice(0,3)
@@ -302,11 +381,6 @@ function checkCred(res) {
     });
 }
 
-/**
- * Exports the exTest function for tesing
- */
-exports.exTest = exTest;
-
 app.use(express.static("static"));
 app.set('views', './views')
 app.set('view engine', 'pug')
@@ -317,6 +391,7 @@ app.get('/login/email/:email/password/:password', login);
 app.get('/signup/', signup);
 app.get('/signup/email/:email/password/:password/name/:name', insertSignup);
 app.get('/update/major/:major/population/:population/distance/:distance/sociallife/:sociallife/demographic/:demographic/graduationrate/:graduationrate/satoract/:satoract/gpa/:gpa', assignPref);
+app.get('/search/input/:input', search);
 app.listen(port, ()=> {
     console.log("App running at port=" + port)
 });

@@ -1,0 +1,70 @@
+body{
+  background-image: url("collegepal.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 0px;
+  backdrop-filter: blur(8px);
+}
+
+h1 {
+    color: white;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    text-align: center;
+    font-weight: bold;
+    display: inline;
+    font-size: 20px;
+}
+
+h2 {
+    color: white;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    text-align: center;
+    font-weight: bold;
+    display: inline;
+}
+
+#majors {
+    color: white;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+#data {
+    text-align: center;
+}
+
+li {
+    font-size: 15px;
+    color: blue;
+}
+
+#population {
+    color: blue;
+}
+
+#distance {
+    color: blue;
+}
+
+#sociallife {
+    color: blue;
+}
+
+#demographic {
+    color: blue;
+}
+
+#graduationrate {
+    color: blue;
+}
+
+#satoract {
+    color: blue;
+}
+
+#gpa {
+    color: blue;
+}

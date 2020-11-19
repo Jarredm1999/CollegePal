@@ -5,8 +5,12 @@ console.log("Hello World");
  */
 function send(major, population, distance, sociallife, demographic, graduationrate, satoract, gpa) {
     let url = "/update/major/" + major + "/population/" + population + "/distance/" + distance + "/sociallife/" + sociallife + "/demographic/" + demographic + "/graduationrate/" + graduationrate + "/satoract/" + satoract + "/gpa/" + gpa;
-    console.log(url);
-    window.location.replace(url);
+    if (typeof window === 'undefined') {
+        console.log("We are running from node");
+        return url;
+    } else {
+        window.location.replace(url);
+    }
 }
 
 /**
@@ -14,6 +18,11 @@ function send(major, population, distance, sociallife, demographic, graduationra
  */
 function signup() {
     let major = $('#major').val();
+    if (major == 'none') {
+        let status = "You must select a major";
+        alert(status);
+        return status;
+    }
     let population = $("#population").val();
     let distance = $("#distance").val();
     let sociallife = $("#sociallife").val();
@@ -32,4 +41,9 @@ function setup() {
     $("#signup").click(signup);
 }
 
-$(document).ready(setup);
+if (typeof window === 'undefined') {
+    console.log("We are running from node");
+    exports.send = send;
+} else {
+    $(document).ready(setup);
+}

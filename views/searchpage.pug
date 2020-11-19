@@ -1,0 +1,44 @@
+html
+    head
+        title Search Page
+        link(rel='stylesheet', href='/searchpage.css')
+    body
+    br
+    div(class='div-class')#data
+        h2=message
+        br
+        br
+        h2 The information for this college is:
+        br
+        br
+        h1 Majors Offered:
+        br
+        div(class='div-class')#majors
+            each item in selectedMajors
+                    li= item
+        h1 Student Population:
+        h1#population=population
+        br
+        br
+        h1 In State/ Out of State:
+        h1#distance=distance
+        br
+        br
+        h1 Near City/Far from City:
+        h1#sociallife=sociallife
+        br
+        br
+        h1 Demographic:
+        h1#demographic=demographic
+        br
+        br
+        h1 Graduation rate:
+        h1#graduationrate=graduationrate
+        br
+        br
+        h1 SAT/ACT:
+        h1#satoract=satoract
+        br
+        br
+        h1 GPA:
+        h1#gpa=gpa

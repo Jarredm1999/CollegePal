@@ -1,11 +1,20 @@
 html
     head
         title College Pal
+        link(rel='stylesheet', href='/homepage.css')
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+        script(src="/homepage.js")
     body
         h1=welcome
         br
         h1 The schools you mathced with are: 
-        ul#answer
+        div(class='div-class')#schools
             each item in selectedSchools
                 li= item
-        
+            br
+            br
+            h2 Still not what you are looking?
+            h2 You can search for a school using the schoool's name and if the school is in our database, we will show you their information
+            input(type="text" placeholder="Enter School Name")#input
+            br
+            input(type="button", value="Search")#search

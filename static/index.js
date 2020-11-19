@@ -16,8 +16,12 @@ function send(email, password) {
 
 function signup() {
     let url = "/signup/";
-    console.log(url);
-    window.location.replace(url);
+     if (typeof window === 'undefined') {
+        console.log("We are running from node");
+        return url;
+    } else {
+        window.location.replace(url);
+    }
 }
 
 /**
@@ -62,6 +66,7 @@ function setup() {
 if (typeof window === 'undefined') {
     console.log("We are running from node");
     exports.send = send;
+    exports.signup = signup;
 } else {
     $(document).ready(setup);
 }
