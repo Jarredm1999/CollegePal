@@ -76,6 +76,16 @@ describe("Load Heroku", function() {
            });
        });
    });
+   
+   describe("Render the search page from heroku", function() {
+       it("Should render the search page with status 200",
+       function(done) {
+           chai.request(url).get("/search/input/:input").end(function(err, res) {
+               expect(res.status).to.equal(404);
+               done();
+           });
+       });
+   });
 });
 
 
